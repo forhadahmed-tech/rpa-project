@@ -5,8 +5,10 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "dev:next": "next dev nextjs",
+    "build:next": "next build ./nextjs",
+    "start:next": "next start ./nextjs",
     "dev:worker": "node --loader ts-node/esm worker/src/index.ts",
-    "dev:next": "cd nextjs && next dev",
     "dev": "concurrently \"npm run dev:worker\" \"npm run dev:next\""
   },
   "keywords": [],
@@ -14,20 +16,31 @@
   "license": "ISC",
   "dependencies": {
     "@prisma/client": "^6.18.0",
-    "@types/node": "^24.9.1",
+    "@tailwindcss/postcss": "^4.1.15",
     "axios": "^1.12.2",
     "bullmq": "^5.61.0",
     "dotenv": "^17.2.3",
+    "exceljs": "^4.4.0",
     "ioredis": "^5.8.2",
+    "lucide-react": "^0.546.0",
+    "next": "^16.0.0",
+    "next-pwa": "^5.6.0",
     "p-limit": "^7.2.0",
     "playwright": "^1.56.1",
+    "postcss": "^8.5.6",
     "prisma": "^6.18.0",
-    "ts-node": "^10.9.2",
-    "typescript": "^5.9.3"
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "tailwindcss": "^4.1.15",
+    "ts-node": "^10.9.2"
   },
   "devDependencies": {
+    "@types/next-pwa": "^5.6.9",
+    "@types/node": "^24.9.1",
+    "@types/react": "^19.2.2",
     "concurrently": "^9.2.1",
     "nodemon": "^3.1.10",
-    "ts-node-dev": "^2.0.0"
+    "ts-node-dev": "^2.0.0",
+    "typescript": "^5.9.3"
   }
 }

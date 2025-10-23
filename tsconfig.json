@@ -9,7 +9,9 @@
     // See also https://aka.ms/tsconfig/module
     "module": "nodenext",
     "target": "esnext",
+    "lib": ["dom", "dom.iterable", "esnext"],
     "types": [],
+    "allowJs": true,
     // For nodejs:
     // "lib": ["esnext"],
     // "types": ["node"],
@@ -36,9 +38,12 @@
     "strict": true,
     "jsx": "react-jsx",
     "verbatimModuleSyntax": true,
+    "esModuleInterop": true,
     "isolatedModules": true,
+    "allowSyntheticDefaultImports": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
-    "skipLibCheck": true,
-  }
+    "skipLibCheck": true
+  },
+  "include": ["nextjs", "worker", "libs"]
 }

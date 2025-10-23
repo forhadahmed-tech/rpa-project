@@ -15,9 +15,7 @@ export const worker = new Worker(
   async (job) => {
     if (!job.id) throw new Error("Job id undefined");
     try {
-      console.log(`Processing job ${job.id}...`);
       const result = await performSiteTask(job.data);
-      console.log("Result-->", result)
       await prisma.jobLog.create({
         data: {
           jobId: job.id.toString(),
