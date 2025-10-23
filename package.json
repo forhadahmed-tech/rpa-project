@@ -1,0 +1,33 @@
+{
+  "name": "rpa-project",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev:worker": "node --loader ts-node/esm worker/src/index.ts",
+    "dev:next": "cd nextjs && next dev",
+    "dev": "concurrently \"npm run dev:worker\" \"npm run dev:next\""
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@prisma/client": "^6.18.0",
+    "@types/node": "^24.9.1",
+    "axios": "^1.12.2",
+    "bullmq": "^5.61.0",
+    "dotenv": "^17.2.3",
+    "ioredis": "^5.8.2",
+    "p-limit": "^7.2.0",
+    "playwright": "^1.56.1",
+    "prisma": "^6.18.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.9.3"
+  },
+  "devDependencies": {
+    "concurrently": "^9.2.1",
+    "nodemon": "^3.1.10",
+    "ts-node-dev": "^2.0.0"
+  }
+}
