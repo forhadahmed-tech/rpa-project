@@ -1,4 +1,3 @@
-import Sidebar from "../components/Sidebar";
 import "./globals.css";
 
 export const metadata = {
@@ -16,10 +15,7 @@ export default function RootLayout({
       <head>
         <link rel="manifest" href="/manifest.json" />
       </head>
-      <body className="flex h-screen bg-gray-100">
-        <Sidebar />
-        <main className="flex-1 p-6 overflow-auto">{children}</main>
-      </body>
+      <body className="flex h-screen">{children}</body>
     </html>
   );
 }
