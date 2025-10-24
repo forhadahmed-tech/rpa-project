@@ -16,3 +16,27 @@ model JobLog {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
+
+model ExcelRecord {
+  id               Int      @id @default(autoincrement())
+  slNo             Int?
+  remarks          String?
+  multipleOrder    String?
+  orderNo          String?
+  bookingConfirmation String?
+  combineCode      String?
+  freeZone         String?
+  invoiceSlNo      String?
+  countryCode      String?
+  cartonQty        Int?
+  fcr              String?
+  loadingPort      String?
+  expQuantity      Int?
+  noOfOrder        Int?
+  column1          String?
+  column2          String?
+  column3          String?
+  column4          String?
+  column5          String?
+  column6          String?
+}

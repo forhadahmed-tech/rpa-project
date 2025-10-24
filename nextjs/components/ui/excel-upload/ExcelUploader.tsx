@@ -7,7 +7,6 @@ import { ProcessButton } from "./ProcessButton";
 import { ErrorMessage } from "./ErrorMessage";
 import { FileInput } from "./FileInput";
 import ExcelTable from "./ExcelTable";
-import { SelectedRowsPanel } from "../table/SelectedRowsPanel";
 
 type UploadStatus = "idle" | "uploading" | "success" | "error";
 
@@ -55,6 +54,44 @@ const ExcelUploader: React.FC = () => {
     setSelectedRows(selectedRows);
     console.log("Selected rows:", selectedRows);
     // You can perform further operations with selectedRows here
+  };
+
+  const handleSaveSelectedRows = async () => {
+    if (!selectedRows || selectedRows.length === 0) {
+      alert("Please select at least one row first.");
+      return;
+    }
+
+    try {
+      // Extract headers (assuming your ExcelTable data includes them)
+      const headers = tableData.headers; // e.g. ["SL_NO", "REMRKS", "Order No", ...]
+      const dataRows = selectedRows.map((rowArray: any[]) => {
+        const rowObject: Record<string, any> = {};
+        headers.forEach((header, index) => {
+          rowObject[header] = rowArray[index];
+        });
+        return rowObject;
+      });
+
+      console.log("Sending data:", dataRows);
+
+      const response = await fetch("/api/excel", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dataRows),
+      });
+
+      const result = await response.json();
+      if (response.ok) {
+        alert(`✅ ${result.count} record(s) saved successfully!`);
+      } else {
+        console.error(result);
+        alert(`❌ Failed: ${result.error || "Unknown error"}`);
+      }
+    } catch (err) {
+      console.error("Save error:", err);
+      alert("Error saving data");
+    }
   };
 
   const handleFileSelect = (selectedFile: File | null) => {
@@ -288,6 +325,16 @@ const ExcelUploader: React.FC = () => {
             enableRowSelection={true}
             onRowSelection={handleRowSelection}
           />
+          {selectedRows.length > 0 && (
+            <div className="mt-4 flex justify-end">
+              <button
+                onClick={handleSaveSelectedRows}
+                className="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition"
+              >
+                Save Selected Rows
+              </button>
+            </div>
+          )}
         </div>
       )}
     </div>

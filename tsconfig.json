@@ -1,6 +1,10 @@
 {
   // Visit https://aka.ms/tsconfig to read more about this file
   "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@libs/*": ["libs/*"]
+    },
     // File Layout
     // "rootDir": "./src",
     // "outDir": "./dist",
@@ -45,5 +49,5 @@
     "moduleDetection": "force",
     "skipLibCheck": true
   },
-  "include": ["nextjs", "worker", "libs"]
+  "include": ["nextjs", "worker", "libs", "prisma"]
 }
