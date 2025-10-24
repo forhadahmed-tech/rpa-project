@@ -116,7 +116,7 @@ const Sidebar: React.FC = () => {
     <aside className="w-64 bg-[#0A1629] shrink-0 p-4 border-r border-gray-800 flex flex-col">
       <div className="px-2 mb-6">
         <h1 className="text-2xl font-semibold tracking-wide bg-linear-to-r from-indigo-400 via-purple-500 to-pink-500 bg-clip-text text-transparent">
-          Export
+          RPA-Automation
         </h1>
       </div>
       <nav className="grow">

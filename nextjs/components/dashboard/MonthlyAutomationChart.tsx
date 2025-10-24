@@ -3,8 +3,8 @@ import { ApexOptions } from "apexcharts";
 import dynamic from "next/dynamic";
 import { useState } from "react";
 import { MoreVertical } from "lucide-react";
-import { Dropdown } from "../ui/badge/dropdown/Dropdown";
-import { DropdownItem } from "../ui/badge/dropdown/DropdownItem";
+import { Dropdown } from "../ui/dropdown/Dropdown";
+import { DropdownItem } from "../ui/dropdown/DropdownItem";
 
 // Dynamically import the ReactApexChart component
 const ReactApexChart = dynamic(() => import("react-apexcharts"), {
