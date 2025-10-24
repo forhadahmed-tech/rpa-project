@@ -39,4 +39,7 @@ model ExcelRecord {
   column4          String?
   column5          String?
   column6          String?
+
+  @@unique([invoiceSlNo, orderNo])
 }
+
