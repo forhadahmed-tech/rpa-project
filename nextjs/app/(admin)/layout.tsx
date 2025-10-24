@@ -26,7 +26,7 @@ export default function RootLayout({
           <Header />
 
           {/* Page content */}
-          <main className="flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
+          <main className="bg-gray-50 flex-1 overflow-y-auto p-4 md:p-6 lg:p-8">
             {children}
           </main>
         </div>
