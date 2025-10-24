@@ -7,6 +7,7 @@ import { ProcessButton } from "./ProcessButton";
 import { ErrorMessage } from "./ErrorMessage";
 import { FileInput } from "./FileInput";
 import ExcelTable from "./ExcelTable";
+import { SelectedRowsPanel } from "../table/SelectedRowsPanel";
 
 type UploadStatus = "idle" | "uploading" | "success" | "error";
 
@@ -30,14 +31,14 @@ const ExcelUploader: React.FC = () => {
   const [allSheets, setAllSheets] = useState<SheetInfo[]>([]);
   const [selectedSheetIndex, setSelectedSheetIndex] = useState<number>(0);
   const [isXLSXLoaded, setIsXLSXLoaded] = useState<boolean>(false);
-
+  const [selectedRows, setSelectedRows] = useState<any[][]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
   // Load XLSX library dynamically
   useEffect(() => {
     const loadXLSX = async () => {
       try {
-        const XLSX = await import('xlsx');
+        const XLSX = await import("xlsx");
         (window as any).XLSX = XLSX;
         setIsXLSXLoaded(true);
       } catch (err) {
@@ -49,6 +50,13 @@ const ExcelUploader: React.FC = () => {
     loadXLSX();
   }, []);
 
+  // Add this handler function
+  const handleRowSelection = (selectedRows: any[][]) => {
+    setSelectedRows(selectedRows);
+    console.log("Selected rows:", selectedRows);
+    // You can perform further operations with selectedRows here
+  };
+
   const handleFileSelect = (selectedFile: File | null) => {
     if (selectedFile) {
       const allowedTypes = [
@@ -56,10 +64,12 @@ const ExcelUploader: React.FC = () => {
         "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
         "text/csv",
         "application/vnd.ms-excel.sheet.macroEnabled.12",
-        "application/vnd.ms-excel.sheet.binary.macroEnabled.12"
+        "application/vnd.ms-excel.sheet.binary.macroEnabled.12",
       ];
-      
-      const isAllowedExtension = /\.(xlsx|xls|csv|xlsm|xlsb)$/i.test(selectedFile.name);
+
+      const isAllowedExtension = /\.(xlsx|xls|csv|xlsm|xlsb)$/i.test(
+        selectedFile.name
+      );
 
       if (allowedTypes.includes(selectedFile.type) || isAllowedExtension) {
         setFile(selectedFile);
@@ -69,7 +79,9 @@ const ExcelUploader: React.FC = () => {
         setAllSheets([]);
         setSelectedSheetIndex(0);
       } else {
-        setError("Invalid file type. Please upload an Excel file (.xlsx, .xls, .csv)");
+        setError(
+          "Invalid file type. Please upload an Excel file (.xlsx, .xls, .csv)"
+        );
         setFile(null);
         setStatus("error");
       }
@@ -133,12 +145,12 @@ const ExcelUploader: React.FC = () => {
 
     try {
       const XLSX = (window as any).XLSX;
-      
+
       const data = await readFileAsArrayBuffer(file);
-      const workbook = XLSX.read(data, { 
+      const workbook = XLSX.read(data, {
         type: "array",
         cellText: false,
-        cellDates: true 
+        cellDates: true,
       });
 
       if (!workbook.SheetNames || workbook.SheetNames.length === 0) {
@@ -146,11 +158,11 @@ const ExcelUploader: React.FC = () => {
       }
 
       const sheets: SheetInfo[] = [];
-      
+
       workbook.SheetNames.forEach((sheetName: string) => {
         const worksheet = workbook.Sheets[sheetName];
-        
-        const range = worksheet['!ref'];
+
+        const range = worksheet["!ref"];
         if (!range) {
           console.warn(`Sheet "${sheetName}" is empty`);
           return;
@@ -159,22 +171,24 @@ const ExcelUploader: React.FC = () => {
         const json: any[][] = XLSX.utils.sheet_to_json(worksheet, {
           header: 1,
           defval: "",
-          blankrows: false
+          blankrows: false,
         });
 
         if (json && json.length > 0) {
-          const nonEmptyRows = json.filter(row => 
-            row.some(cell => cell !== null && cell !== "" && cell !== undefined)
+          const nonEmptyRows = json.filter((row) =>
+            row.some(
+              (cell) => cell !== null && cell !== "" && cell !== undefined
+            )
           );
 
           if (nonEmptyRows.length > 0) {
-            const headers = nonEmptyRows[0].map((h) => 
+            const headers = nonEmptyRows[0].map((h) =>
               h === null || h === undefined ? "" : String(h)
             );
             const rows = nonEmptyRows.slice(1);
             sheets.push({
               name: sheetName,
-              data: { headers, rows, sheetName }
+              data: { headers, rows, sheetName },
             });
           }
         }
@@ -190,7 +204,8 @@ const ExcelUploader: React.FC = () => {
       }
     } catch (err) {
       console.error("File processing error:", err);
-      const errorMessage = err instanceof Error ? err.message : "An unknown error occurred.";
+      const errorMessage =
+        err instanceof Error ? err.message : "An unknown error occurred.";
       setError(
         `Failed to process file: ${errorMessage}. Please ensure it's a valid Excel file.`
       );
@@ -227,7 +242,7 @@ const ExcelUploader: React.FC = () => {
   return (
     <div className="w-full max-w-6xl">
       <FileInput ref={fileInputRef} onChange={onFileChange} />
-      
+
       <FileDropzone
         file={file}
         isDragging={isDragging}
@@ -262,10 +277,17 @@ const ExcelUploader: React.FC = () => {
         <div className="mt-6">
           {allSheets.length > 1 && (
             <div className="mb-4 text-sm text-gray-600">
-              Currently viewing: <span className="font-medium text-gray-800">{tableData.sheetName}</span>
+              Currently viewing:{" "}
+              <span className="font-medium text-gray-800">
+                {tableData.sheetName}
+              </span>
             </div>
           )}
-          <ExcelTable data={tableData} />
+          <ExcelTable
+            data={tableData}
+            enableRowSelection={true}
+            onRowSelection={handleRowSelection}
+          />
         </div>
       )}
     </div>
