@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
-import prisma from "../../../../utils/prismaClient.js";
+import prisma from "../../../../utils/prismaClient";
 
 const getString = (val: any) => val != null ? String(val) : null;
 

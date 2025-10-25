@@ -6,7 +6,7 @@
   "type": "module",
   "scripts": {
     "dev:next": "next dev nextjs",
-    "build:next": "next build ./nextjs",
+    "build:next": "next build ./nextjs && tsc -p .",
     "start:next": "next start ./nextjs",
     "dev:worker": "node --loader ts-node/esm worker/src/index.ts",
     "dev": "concurrently \"npm run dev:worker\" \"npm run dev:next\""
@@ -47,6 +47,7 @@
     "concurrently": "^9.2.1",
     "nodemon": "^3.1.10",
     "ts-node-dev": "^2.0.0",
+    "turbo": "^2.5.8",
     "typescript": "^5.9.3"
   }
 }

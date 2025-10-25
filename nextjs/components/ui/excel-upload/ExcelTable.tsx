@@ -133,6 +133,7 @@ const ExcelTable: React.FC<ExcelTableProps> = ({
           onClearSelection={clearSelection}
           onExport={handleExport}
           onCopy={handleCopy}
+          data={[]}
         />
       )}
 

@@ -64,16 +64,16 @@ const ExcelUploader: React.FC = () => {
 
     try {
       // Extract headers (assuming your ExcelTable data includes them)
-      const headers = tableData.headers; // e.g. ["SL_NO", "REMRKS", "Order No", ...]
+      const headers = tableData?.headers; // e.g. ["SL_NO", "REMRKS", "Order No", ...]
       const dataRows = selectedRows.map((rowArray: any[]) => {
         const rowObject: Record<string, any> = {};
-        headers.forEach((header, index) => {
+        headers?.forEach((header, index) => {
           rowObject[header] = rowArray[index];
         });
         return rowObject;
       });
 
-      const response = await fetch("/api/excel", {
+      const response = await fetch("/api/excel/create", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(dataRows),
