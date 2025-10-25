@@ -1,5 +1,10 @@
 import React from "react";
-import { ChevronLeft, ChevronRight, ChevronsLeft, ChevronsRight } from "lucide-react";
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+} from "lucide-react";
 
 interface PaginationProps {
   currentPage: number;
@@ -16,15 +21,15 @@ export const Pagination: React.FC<PaginationProps> = ({
   totalItems,
   itemsPerPage,
   onPageChange,
-  className = ""
+  className = "",
 }) => {
   const startItem = (currentPage - 1) * itemsPerPage + 1;
   const endItem = Math.min(currentPage * itemsPerPage, totalItems);
 
   const getPageNumbers = () => {
-    const pages = [];
+    const pages: number[] = [];
     const maxVisiblePages = 5;
-    
+
     if (totalPages <= maxVisiblePages) {
       for (let i = 1; i <= totalPages; i++) {
         pages.push(i);
@@ -32,23 +37,25 @@ export const Pagination: React.FC<PaginationProps> = ({
     } else {
       const startPage = Math.max(1, currentPage - 2);
       const endPage = Math.min(totalPages, startPage + maxVisiblePages - 1);
-      
+
       for (let i = startPage; i <= endPage; i++) {
         pages.push(i);
       }
     }
-    
+
     return pages;
   };
 
   if (totalPages <= 1) return null;
 
   return (
-    <div className={`flex flex-col sm:flex-row items-center justify-between gap-4 p-4 bg-white border border-gray-200 rounded-lg shadow-sm ${className}`}>
+    <div
+      className={`flex flex-col sm:flex-row items-center justify-between gap-4 p-4 bg-white border border-gray-200 rounded-lg shadow-sm ${className}`}
+    >
       <div className="text-sm text-gray-600">
         Showing {startItem} to {endItem} of {totalItems} entries
       </div>
-      
+
       <div className="flex items-center gap-1">
         <button
           onClick={() => onPageChange(1)}
@@ -58,7 +65,7 @@ export const Pagination: React.FC<PaginationProps> = ({
         >
           <ChevronsLeft className="w-4 h-4" />
         </button>
-        
+
         <button
           onClick={() => onPageChange(currentPage - 1)}
           disabled={currentPage === 1}
@@ -67,7 +74,7 @@ export const Pagination: React.FC<PaginationProps> = ({
         >
           <ChevronLeft className="w-4 h-4" />
         </button>
-        
+
         {getPageNumbers().map((page) => (
           <button
             key={page}
@@ -83,7 +90,7 @@ export const Pagination: React.FC<PaginationProps> = ({
             {page}
           </button>
         ))}
-        
+
         <button
           onClick={() => onPageChange(currentPage + 1)}
           disabled={currentPage === totalPages}
@@ -92,7 +99,7 @@ export const Pagination: React.FC<PaginationProps> = ({
         >
           <ChevronRight className="w-4 h-4" />
         </button>
-        
+
         <button
           onClick={() => onPageChange(totalPages)}
           disabled={currentPage === totalPages}

@@ -26,7 +26,7 @@ const ExcelTable: React.FC<ExcelTableProps> = ({
   const [currentPage, setCurrentPage] = useState(1);
   const [rowsPerPage, setRowsPerPage] = useState(10);
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedRows, setSelectedRows] = useState<Set<number>>(new Set());
+  const [selectedRows, setSelectedRows] = useState<any>(new Set());
 
   // Filter rows based on search term
   const filteredRows = useMemo(() => {
@@ -47,7 +47,7 @@ const ExcelTable: React.FC<ExcelTableProps> = ({
 
   // Get selected rows data
   const selectedRowsData = useMemo(() => {
-    return Array.from(selectedRows).map((index) => rows[index]);
+    return Array.from(selectedRows).map((index:number) => rows[index]);
   }, [selectedRows, rows]);
 
   // Notify parent when selection changes
@@ -133,7 +133,6 @@ const ExcelTable: React.FC<ExcelTableProps> = ({
           onClearSelection={clearSelection}
           onExport={handleExport}
           onCopy={handleCopy}
-          data={[]}
         />
       )}
 

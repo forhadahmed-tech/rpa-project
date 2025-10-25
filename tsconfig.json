@@ -7,7 +7,7 @@
     },
     // File Layout
     // "rootDir": "./src",
-    // "outDir": "./dist",
+    "outDir": "./dist",
 
     // Environment Settings
     // See also https://aka.ms/tsconfig/module
@@ -49,5 +49,6 @@
     "moduleDetection": "force",
     "skipLibCheck": true
   },
-  "include": ["nextjs", "worker", "libs", "prisma"]
+  "include": ["worker/**/*.ts", "nextjs/**/*.ts", "nextjs/**/*.tsx"],
+  "exclude": ["node_modules", "dist"]
 }
