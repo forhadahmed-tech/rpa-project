@@ -1,2 +1,2 @@
-import "./queue.js";
-console.log("Worker started...");
+import "./jobs/index.js";
+import "./bullboard/server.js";
