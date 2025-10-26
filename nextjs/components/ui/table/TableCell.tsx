@@ -1,5 +1,4 @@
 import React from "react";
-import { Tooltip } from "../tooltip/Tooltip";
 
 interface TableCellProps {
   content: string;
@@ -7,24 +6,22 @@ interface TableCellProps {
   className?: string;
 }
 
-export const TableCell: React.FC<TableCellProps> = ({ 
-  content, 
+export const TableCell: React.FC<TableCellProps> = ({
+  content,
   truncateLength = 80,
-  className = ""
+  className = "",
 }) => {
   const displayContent = content || "";
   const shouldTruncate = displayContent.length > truncateLength;
-  const displayText = shouldTruncate 
-    ? displayContent.substring(0, truncateLength) + "..." 
+  const displayText = shouldTruncate
+    ? displayContent.substring(0, truncateLength) + "..."
     : displayContent;
 
   if (shouldTruncate) {
     return (
-      <Tooltip content={displayContent}>
-        <div className={`truncate ${className}`} title={displayContent}>
-          {displayText}
-        </div>
-      </Tooltip>
+      <div className={`truncate ${className}`} title={displayContent}>
+        {displayText}
+      </div>
     );
   }
 

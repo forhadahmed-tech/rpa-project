@@ -36,6 +36,8 @@ export default function QueueDashboard() {
   const [loading, setLoading] = useState(true);
   const [autoRefresh, setAutoRefresh] = useState(true);
 
+  console.log("data", data)
+
   const fetchStats = async () => {
     try {
       const response = await fetch("/api/queue/stats");

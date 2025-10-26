@@ -13,7 +13,6 @@ export async function POST(req: Request) {
   }
 
   for (const row of data) {
-    console.log("Rows", row)
     await excelQueue.add("processExcelRow", row);
   }
 
