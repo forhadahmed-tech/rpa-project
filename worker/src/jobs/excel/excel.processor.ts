@@ -7,7 +7,6 @@ export const excelProcessor = async (job: Job) => {
   logger.info(`Processing Excel row ${job.id}`);
 
   try {
-    // Example: simulate visiting a 3rd-party site
     await fetch("https://thirdparty.example.com/api", {
       method: "POST",
       body: JSON.stringify(row),

@@ -19,10 +19,10 @@ const Header = () => (
       <div className="w-px h-8 bg-gray-200"></div>
       <div className="flex items-center space-x-3">
         <div className="w-10 h-10 rounded-full bg-gray-800 text-white flex items-center justify-center font-bold">
-          PS
+          FA
         </div>
         <div>
-          <div className="font-semibold text-sm">Pawel Samuczuk</div>
+          <div className="font-semibold text-sm">Forhad Ahmed</div>
           <div className="text-xs text-gray-500">Super Admin</div>
         </div>
       </div>

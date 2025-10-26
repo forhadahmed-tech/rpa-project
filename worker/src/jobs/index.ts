@@ -1,6 +1,6 @@
 import { Worker } from "bullmq";
 import { excelProcessor } from "./excelJob.processor.js";
-import { redisConnection } from "../utils/redis.js";
+import { redisConnection } from "../../../libs/redis/redis.js";
 import logger from "../utils/logger.js";
 
 const workers = [

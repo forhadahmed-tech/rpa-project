@@ -1,10 +1,6 @@
 import { chromium } from "playwright";
 
 const randomWebsites = [
-  "https://example.com",
-  "https://news.ycombinator.com",
-  "https://github.com",
-  "https://openai.com",
   "https://wikipedia.org",
 ];
 
@@ -15,7 +11,6 @@ export async function runMockAutomation(row: any) {
   });
   const page = await browser.newPage();
 
-  // Pick a random website
   const url =
     randomWebsites[Math.floor(Math.random() * randomWebsites.length)] ??
     "https://example.com";
@@ -24,7 +19,6 @@ export async function runMockAutomation(row: any) {
   try {
     await page.goto(url, { timeout: 15000 });
 
-    // Randomly perform an action
     const randomAction = Math.floor(Math.random() * 3);
     if (randomAction === 0) {
       await page.click("body");

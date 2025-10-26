@@ -1,4 +1,3 @@
-// excelJob.processor.ts
 import { runMockAutomation } from "./mockAutomation.js";
 
 export const excelProcessor = async (job: any) => {
