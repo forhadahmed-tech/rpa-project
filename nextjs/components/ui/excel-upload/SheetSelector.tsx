@@ -30,7 +30,7 @@ export const SheetSelector: React.FC<SheetSelectorProps> = ({
           <button
             key={sheet.name}
             onClick={() => onSheetChange(index)}
-            className={`px-4 py-2 rounded-lg text-sm font-medium transition-colors duration-200 ${
+            className={`px-4 py-2 rounded-lg cursor-pointer text-sm font-medium transition-colors duration-200 ${
               selectedIndex === index
                 ? "bg-blue-600 text-white"
                 : "bg-white text-gray-700 border border-gray-300 hover:bg-gray-50"

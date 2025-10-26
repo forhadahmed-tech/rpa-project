@@ -31,6 +31,7 @@
     "fastify": "^5.6.1",
     "ioredis": "^5.8.2",
     "lucide-react": "^0.546.0",
+    "motion": "^12.23.24",
     "next": "^16.0.0",
     "next-pwa": "^5.6.0",
     "p-limit": "^7.2.0",
@@ -40,6 +41,7 @@
     "react": "^19.2.0",
     "react-apexcharts": "^1.8.0",
     "react-dom": "^19.2.0",
+    "react-hot-toast": "^2.6.0",
     "tailwindcss": "^4.1.15",
     "ts-node": "^10.9.2",
     "xlsx": "^0.18.5"

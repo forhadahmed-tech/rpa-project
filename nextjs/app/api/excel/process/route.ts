@@ -1,7 +1,7 @@
 
 import { NextResponse } from "next/server";
 import { Queue } from "bullmq";
-import { redisConnection } from "../../../../utils/redis";
+import { redisConnection } from "../../../../../libs/redis/redis";
 
 const excelQueue = new Queue("excelQueue", { connection: redisConnection });
 
@@ -13,6 +13,7 @@ export async function POST(req: Request) {
   }
 
   for (const row of data) {
+    console.log("Rows", row)
     await excelQueue.add("processExcelRow", row);
   }
 

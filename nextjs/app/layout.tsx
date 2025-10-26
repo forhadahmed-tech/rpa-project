@@ -1,4 +1,5 @@
 import "./globals.css";
+import ToasterProvider from "./providers/ToasterProvider";
 
 export const metadata = {
   title: "RPA Project",
@@ -15,7 +16,10 @@ export default function RootLayout({
       <head>
         <link rel="manifest" href="/manifest.json" />
       </head>
-      <body className="flex h-screen">{children}</body>
+      <body className="flex h-screen">
+        {children}
+        <ToasterProvider />
+      </body>
     </html>
   );
 }

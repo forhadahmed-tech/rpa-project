@@ -1,4 +1,5 @@
 "use client";
+
 import React, { useState, useMemo, useEffect } from "react";
 import { Pagination, TableCell, TableControls, TableSummary } from "../table";
 import { SelectedRowsPanel } from "../table/SelectedRowsPanel";
@@ -19,7 +20,7 @@ interface ExcelTableProps {
 const ExcelTable: React.FC<ExcelTableProps> = ({
   data,
   className = "",
-  onRowSelection,
+  // onRowSelection,
   enableRowSelection = false,
 }) => {
   const { headers, rows } = data;
@@ -46,14 +47,14 @@ const ExcelTable: React.FC<ExcelTableProps> = ({
   const currentRows = filteredRows.slice(startIndex, endIndex);
 
   // Get selected rows data
-  const selectedRowsData = useMemo(() => {
-    return Array.from(selectedRows).map((index:number) => rows[index]);
-  }, [selectedRows, rows]);
+  // const selectedRowsData = useMemo(() => {
+  //   return Array.from(selectedRows).map((index: number) => rows[index]);
+  // }, [selectedRows, rows]);
 
   // Notify parent when selection changes
-  useEffect(() => {
-    onRowSelection?.(selectedRowsData);
-  }, [selectedRowsData, onRowSelection]);
+  // useEffect(() => {
+  //   onRowSelection?.(selectedRowsData);
+  // }, [selectedRowsData, onRowSelection]);
 
   // Handlers
   const handlePageChange = (page: number) => {
@@ -120,9 +121,6 @@ const ExcelTable: React.FC<ExcelTableProps> = ({
     // Export selected rows to CSV/Excel
   };
 
-  const handleCopy = (selectedRows: any[][]) => {
-    // Copy selected rows to clipboard
-  };
 
   return (
     <div className={`w-full space-y-4 ${className}`}>
@@ -132,7 +130,7 @@ const ExcelTable: React.FC<ExcelTableProps> = ({
           selectedRows={selectedRows}
           onClearSelection={clearSelection}
           onExport={handleExport}
-          onCopy={handleCopy}
+          rowData={data}
         />
       )}
 
