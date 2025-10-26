@@ -21,8 +21,6 @@ export async function GET(request: Request) {
 
     const jobs = await getJobsByStatus(queue, status, page, pageSize);
 
-    console.log("jobs", jobs)
-
     return NextResponse.json({
       jobs,
       pagination: {

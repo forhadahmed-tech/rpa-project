@@ -30,10 +30,7 @@ const ExcelUploader: React.FC = () => {
   const [allSheets, setAllSheets] = useState<SheetInfo[]>([]);
   const [selectedSheetIndex, setSelectedSheetIndex] = useState<number>(0);
   const [isXLSXLoaded, setIsXLSXLoaded] = useState<boolean>(false);
-  const [selectedRows, setSelectedRows] = useState<any[][]>([]);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
-  console.log("selectedRows", selectedRows)
 
   // Load XLSX library dynamically
   useEffect(() => {
@@ -50,48 +47,6 @@ const ExcelUploader: React.FC = () => {
 
     loadXLSX();
   }, []);
-
-  // Add this handler function
-  // const handleRowSelection = (selectedRows: any[][]) => {
-  //   setSelectedRows(selectedRows);
-  //   console.log("Selected rows:", selectedRows);
-  // };
-
-  // const handleSaveSelectedRows = async () => {
-  //   if (!selectedRows || selectedRows.length === 0) {
-  //     alert("Please select at least one row first.");
-  //     return;
-  //   }
-
-  //   try {
-  //     // Extract headers (assuming your ExcelTable data includes them)
-  //     const headers = tableData?.headers; // e.g. ["SL_NO", "REMRKS", "Order No", ...]
-  //     const dataRows = selectedRows.map((rowArray: any[]) => {
-  //       const rowObject: Record<string, any> = {};
-  //       headers?.forEach((header, index) => {
-  //         rowObject[header] = rowArray[index];
-  //       });
-  //       return rowObject;
-  //     });
-
-  //     const response = await fetch("/api/excel/create", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify(dataRows),
-  //     });
-
-  //     const result = await response.json();
-  //     if (response.ok) {
-  //       alert(`✅ ${result.count} record(s) saved successfully!`);
-  //     } else {
-  //       console.error(result);
-  //       alert(`❌ Failed: ${result.error || "Unknown error"}`);
-  //     }
-  //   } catch (err) {
-  //     console.error("Save error:", err);
-  //     alert("Error saving data");
-  //   }
-  // };
 
   const handleFileSelect = (selectedFile: File | null) => {
     if (selectedFile) {
@@ -275,45 +230,6 @@ const ExcelUploader: React.FC = () => {
     }
   };
 
-  // const handleProceedForProcessing = async () => {
-  //   if (!selectedRows || selectedRows.length === 0) {
-  //     alert("Please select at least one row first.");
-  //     return;
-  //   }
-
-  //   try {
-  //     const headers = tableData?.headers;
-  //     if (!headers) return;
-
-  //     const dataRows = selectedRows.map((rowArray: any[]) => {
-  //       const rowObject: Record<string, any> = {};
-  //       headers.forEach((header, index) => {
-  //         rowObject[header] = rowArray[index];
-  //       });
-  //       return rowObject;
-  //     });
-
-  //     const response = await fetch("/api/excel/process", {
-  //       method: "POST",
-  //       headers: { "Content-Type": "application/json" },
-  //       body: JSON.stringify(dataRows),
-  //     });
-
-  //     const result = await response.json();
-
-  //     if (response.ok) {
-  //       alert("✅ Selected rows queued for processing!");
-  //       setSelectedRows([]); // optionally reset selection
-  //     } else {
-  //       console.error(result);
-  //       alert(`❌ Failed: ${result.error || "Unknown error"}`);
-  //     }
-  //   } catch (err) {
-  //     console.error("Processing error:", err);
-  //     alert("Error while queuing data for processing");
-  //   }
-  // };
-
   return (
     <div className="w-full max-w-6xl">
       <FileInput ref={fileInputRef} onChange={onFileChange} />
@@ -361,25 +277,7 @@ const ExcelUploader: React.FC = () => {
           <ExcelTable
             data={tableData}
             enableRowSelection={true}
-            // onRowSelection={handleRowSelection}
           />
-          {/* {selectedRows.length > 0 && (
-            <div className="mt-4 flex justify-end">
-              <button
-                onClick={handleSaveSelectedRows}
-                className="px-4 py-2 bg-blue-600 text-white font-medium rounded-lg hover:bg-blue-700 transition"
-              >
-                Save Selected Rows
-              </button>
-
-              <button
-                onClick={handleProceedForProcessing}
-                className="px-4 py-2 bg-green-600 text-white font-medium rounded-lg hover:bg-green-700 transition"
-              >
-                Proceed for Automation
-              </button>
-            </div>
-          )} */}
         </div>
       )}
     </div>

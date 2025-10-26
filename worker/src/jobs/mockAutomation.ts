@@ -14,7 +14,6 @@ export async function runMockAutomation(row: any) {
   const url =
     randomWebsites[Math.floor(Math.random() * randomWebsites.length)] ??
     "https://example.com";
-  console.log(`🧩 [Mock RPA] Opening: ${url} for row: ${row.OrderNo || "N/A"}`);
 
   try {
     await page.goto(url, { timeout: 15000 });
@@ -29,8 +28,6 @@ export async function runMockAutomation(row: any) {
     } else {
       await page.evaluate(() => window.scrollTo(0, document.body.scrollHeight));
     }
-
-    console.log(`✅ [Mock RPA] Finished for: ${row.OrderNo}`);
   } catch (err) {
     console.error(`❌ [Mock RPA] Failed for: ${row.OrderNo}`, err);
   } finally {
