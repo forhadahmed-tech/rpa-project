@@ -16,7 +16,7 @@ export default function RootLayout({
       <head>
         <link rel="manifest" href="/manifest.json" />
       </head>
-      <body className="flex h-screen">
+      <body className="flex min-h-screen bg-gray-100 text-gray-900">
         {children}
         <ToasterProvider />
       </body>

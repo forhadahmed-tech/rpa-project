@@ -32,6 +32,8 @@ const ExcelUploader: React.FC = () => {
   const [isXLSXLoaded, setIsXLSXLoaded] = useState<boolean>(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
 
+  console.log("tableData", tableData)
+
   // Load XLSX library dynamically
   useEffect(() => {
     const loadXLSX = async () => {

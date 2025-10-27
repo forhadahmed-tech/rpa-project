@@ -1,5 +1,5 @@
 import React from "react";
-import { Download, Copy, Trash2 } from "lucide-react";
+import { Download, Trash2 } from "lucide-react";
 import RobotButton from "../button/RobotButton";
 import toast from "react-hot-toast";
 
@@ -79,48 +79,55 @@ export const SelectedRowsPanel: React.FC<SelectedRowsPanelProps> = ({
     }
   };
 
-  const handleProceedForProcessing = async () => {
-    if (!selectedRows || selectedRows.size === 0) {
-      toast.dismiss("Please select at least one row first.!");
-      
-      return;
-    }
+  // Function to normalize headers to snake_case
+const normalizeHeader = (header: string) => {
+  return header
+    .trim()
+    .toLowerCase()
+    .replace(/\s+/g, "_");
+};
 
-    try {
-      const headers = rowData?.headers;
-      if (!headers) return;
+const handleProceedForProcessing = async () => {
+  if (!selectedRows || selectedRows.size === 0) {
+    toast.dismiss("Please select at least one row first!");
+    return;
+  }
 
-      // Convert selected row indices to actual row data
-      const selectedRowData = Array.from(selectedRows).map(
-        (index) => rowData?.rows[index]
-      );
+  try {
+    const headers = rowData?.headers;
+    if (!headers) return;
 
-      const dataRows = selectedRowData.map((rowArray: any[]) => {
-        const rowObject: Record<string, any> = {};
-        headers.forEach((header, index) => {
-          rowObject[header] = rowArray[index];
-        });
-        return rowObject;
+    const normalizedHeaders = headers.map(normalizeHeader);
+    const selectedRowData = Array.from(selectedRows).map(
+      (index) => rowData?.rows[index]
+    );
+
+    const dataRows = selectedRowData.map((rowArray: any[]) => {
+      const rowObject: Record<string, any> = {};
+      normalizedHeaders.forEach((header, index) => {
+        rowObject[header] = rowArray[index];
       });
+      return rowObject;
+    });
 
-      const response = await fetch("/api/excel/process", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(dataRows),
-      });
+    const response = await fetch("/api/excel/process", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(dataRows),
+    });
 
-      const result = await response.json();
+    const result = await response.json();
 
-      if (response.ok) {
-        toast.success("Selected rows queued for processing!");
-        onClearSelection();
-      } else {
-        toast.error(`Failed: ${result.error || "Unknown error"}`);
-      }
-    } catch (err) {
-      toast.error(`Error: ${err || "Error while queuing data for processing"}`);
+    if (response.ok) {
+      toast.success("Selected rows queued for processing!");
+      onClearSelection();
+    } else {
+      toast.error(`Failed: ${result.error || "Unknown error"}`);
     }
-  };
+  } catch (err) {
+    toast.error(`Error: ${err || "Error while queuing data for processing"}`);
+  }
+};
 
   return (
     <div
