@@ -4,12 +4,13 @@ import { FastifyAdapter } from "@bull-board/fastify";
 import { BullMQAdapter } from "@bull-board/api/bullMQAdapter";
 import { formQueue } from "../queues/form.queue.js";
 import { invoiceQueue } from "../queues/invoice.queue.js";
+import { mockQueue } from "../queues/mock.queue.js";
 
 const server = Fastify({ logger: true });
 const serverAdapter = new FastifyAdapter();
 
 createBullBoard({
-  queues: [new BullMQAdapter(formQueue), new BullMQAdapter(invoiceQueue)],
+  queues: [new BullMQAdapter(mockQueue), new BullMQAdapter(formQueue), new BullMQAdapter(invoiceQueue)],
   serverAdapter,
 });
 
