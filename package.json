@@ -9,9 +9,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "dev:next": "next dev nextjs",
+    "dev:next": "next dev nextjs -p 4040",
     "build:next": "next build ./nextjs && tsc -p .",
-    "start:next": "next start ./nextjs",
+    "start:next": "next start ./nextjs -p 4040",
     "dev:worker": "node --loader ts-node/esm worker/src/index.ts",
     "dev": "concurrently \"npm run dev:worker\" \"npm run dev:next\""
   },

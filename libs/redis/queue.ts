@@ -1,20 +1,13 @@
-import { Queue } from "bullmq";
+import { Queue, Job } from "bullmq";
 import { redisConnection } from "./redis";
 
-// Initialize queues
-export const excelQueue = new Queue("excelQueue", {
+// Initialize categoryQueue
+export const categoryQueue = new Queue("categoryQueue", {
   connection: redisConnection,
 });
 
-// Helper to get all queues
-export const getAllQueues = () => {
-  return {
-    excelQueue: excelQueue,
-  };
-};
-
-// Get stats for a specific queue
-export async function getQueueStats(queue: Queue) {
+// Get queue stats
+export async function getQueueStats(queue = categoryQueue) {
   const counts = await queue.getJobCounts(
     "waiting",
     "active",
@@ -35,13 +28,17 @@ export async function getQueueStats(queue: Queue) {
 }
 
 // Get jobs with pagination
-// In your API route
-export async function getJobsByStatus(queue: Queue, status: string, page: number = 0, pageSize: number = 50) {
+export async function getJobsByStatus(
+  queue = categoryQueue,
+  status: "waiting" | "active" | "completed" | "failed" | "delayed",
+  page = 0,
+  pageSize = 50
+) {
   const start = page * pageSize;
   const end = start + pageSize - 1;
-  
-  const jobs = await queue.getJobs([status as any], start, end, true);
-  
+
+  const jobs: Job[] = await queue.getJobs([status], start, end, true);
+
   return jobs.map(job => ({
     id: job.id,
     name: job.name,

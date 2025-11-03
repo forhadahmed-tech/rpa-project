@@ -1,9 +1,6 @@
-
+// app/api/category/add/route.ts
 import { NextResponse } from "next/server";
-import { Queue } from "bullmq";
-import { redisConnection } from "../../../../../libs/redis/redis";
-
-const excelQueue = new Queue("excelQueue", { connection: redisConnection });
+import { categoryQueue } from "../../../../../libs/redis/queue";
 
 export async function POST(req: Request) {
   const data = await req.json();
@@ -13,8 +10,8 @@ export async function POST(req: Request) {
   }
 
   for (const row of data) {
-    await excelQueue.add("processExcelRow", row);
+    await categoryQueue.add("createCategory", row); // each row becomes a job
   }
 
-  return NextResponse.json({ message: "Excel data queued for processing" });
+  return NextResponse.json({ message: "Category data queued for processing" });
 }
